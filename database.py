@@ -13,11 +13,12 @@ DB_PASSWORD = os.getenv("DB_PASSWORD")
 def get_db_connection():
     try:
         conn = pyodbc.connect(
-            f"DRIVER={{SQL Server}};"
+            f"DRIVER={{ODBC Driver 18 for SQL Server}};"  # ✅ Corrected driver name
             f"SERVER={DB_SERVER};"
             f"DATABASE={DB_DATABASE};"
             f"UID={DB_USERNAME};"
-            f"PWD={DB_PASSWORD}"
+            f"PWD={DB_PASSWORD};"
+            f"TrustServerCertificate=yes"
         )
         return conn
     except Exception as e:
