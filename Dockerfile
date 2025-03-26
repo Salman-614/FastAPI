@@ -15,12 +15,12 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
     apt-transport-https \
-    software-properties-common \
-    && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-    && add-apt-repository "$(curl -s https://packages.microsoft.com/config/debian/$(lsb_release -rs)/prod.list)" \
-    && apt-get update && apt-get install -y \
-    msodbcsql18 \
-    && rm -rf /var/lib/apt/lists/*
+    software-properties-common && \
+    curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | tee /usr/share/keyrings/microsoft.asc && \
+    echo "deb [signed-by=/usr/share/keyrings/microsoft.asc] https://packages.microsoft.com/debian/12/prod bookworm main" | tee /etc/apt/sources.list.d/mssql-release.list && \
+    apt-get update && \
+    apt-get install -y msodbcsql18 && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
