@@ -21,9 +21,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy all project files into the container
 COPY . .
 
-# Make start.sh executable (if needed)
-RUN chmod +x start.sh
-
 # Expose the application port (but let Railway set the actual port)
 EXPOSE 8000
 
