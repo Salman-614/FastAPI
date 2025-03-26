@@ -21,11 +21,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy all project files into the container
 COPY . .
 
-# Make start.sh executable (if you need it)
+# Make start.sh executable (if needed)
 RUN chmod +x start.sh
 
-# Expose the application port
+# Expose the application port (but let Railway set the actual port)
 EXPOSE 8000
 
-# Command to run your FastAPI app
-CMD ["sh", "./start.sh"]
+# Command to run FastAPI
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "${PORT:-8000}"]
