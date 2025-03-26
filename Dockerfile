@@ -9,10 +9,17 @@ COPY requirements.txt .
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
+    unixodbc \
     unixodbc-dev \
     libsqlite3-dev \
     build-essential \
     curl \
+    apt-transport-https \
+    software-properties-common \
+    && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && add-apt-repository "$(curl -s https://packages.microsoft.com/config/debian/$(lsb_release -rs)/prod.list)" \
+    && apt-get update && apt-get install -y \
+    msodbcsql18 \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
